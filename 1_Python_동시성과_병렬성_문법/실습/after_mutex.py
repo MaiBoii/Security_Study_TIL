@@ -4,7 +4,7 @@ import time
 import threading
 
 class FakeDataStore:
-    # 공유 변수 설정 (스택 영역)
+  # 공유 변수 설정 (스택 영역)
     def __init__(self):
         self.value = 0
         self._lock = threading.Lock()
@@ -13,23 +13,20 @@ class FakeDataStore:
     def update(self,n):
         logging.info('Thread %s: 업데이트 시작', n)
 
-        # Mutex (Lock) 등 동기화가 필요한 지점
+    # Mutex (Lock) 등 동기화가 필요한 지점
 
-        # Lock 획득 방법 1
-        self._lock.acquire()
-        logging.info("Thread %s 락을 가졌습니다.", n)
-    
+        with self._lock:
+            logging.info("Thread %s 락을 가졌습니다.", n)
 
-        local_copy = self.value # local_copy의 스택 영역에 0을 저장
-        local_copy += 1
-        time.sleep(0.1)
-        self.value = local_copy
+            local_copy = self.value # local_copy의 스택 영역에 0을 저장
+            local_copy += 1
+            time.sleep(0.1)
+            self.value = local_copy
 
-        logging.info('Thread %s: 락을 풀었습니다.', n)
-        self._lock.release()
-
+            logging.info('Thread %s이 락을 풀려고합니다.', n)
 
         logging.info('Thread %s: 업데이트 마침', n)
+
 
 if __name__ == "__main__":
     # Logging format 설정
