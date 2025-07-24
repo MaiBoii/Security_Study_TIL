@@ -76,9 +76,6 @@ def main():
     print("Main-Processing Total_count={}".format(total))
     print("Main-Processing Done!")
 
-# 마찬가지로 Pipe 사용법은 링크 별도 첨부 예제 참조
-# https://docs.python.org/3/library/multiprocessing.html#exchanging-objects-between-processes
-
 if __name__ == "__main__":
     main()
     
